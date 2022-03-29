@@ -1,0 +1,7 @@
+sql:
+  q1: select co.title,avg(age(completeddate,startdate)) as diff from certificate ce inner join course co on ce.course=co.id group by co.title
+  q2: select concat(u.firstname,' ',u.lastname) as name,avg(age(completeddate,startdate)) as diff from certificate ce inner join "user" u on ce."user"=u.id group by name
+  q3: select concat(u.firstname,' ',u.lastname) as name,co.title,avg(age(ce.completeddate,ce.startdate)) as diff from ("user" u  inner join certificate ce on u.id=ce."user") inner join course co on co.id = ce.course group by name,co.title order by name
+  q4_fastest: select concat(u.firstname,' ',u.lastname) as name,co.title, age(ce.completeddate,ce.startdate) as diff from ("user" u  inner join certificate ce on u.id=ce."user") inner join course co on co.id = ce.course order by diff limit 1;
+  q4_slowest: select concat(u.firstname,' ',u.lastname) as name,co.title, age(ce.completeddate,ce.startdate) as diff from ("user" u  inner join certificate ce on u.id=ce."user") inner join course co on co.id = ce.course order by diff desc limit 1;
+  q5: select concat(u.firstname,' ',u.lastname) as name,count(course) from certificate ce inner join "user" u on u.id = ce."user" group by name;
